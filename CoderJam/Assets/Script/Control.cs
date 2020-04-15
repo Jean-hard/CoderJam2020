@@ -58,18 +58,14 @@ public class Control : MonoBehaviour
 		projectilIsTransforming = true;
 		Projectile.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 		Projectile.Sacrifice();
-		Projectile.transform.rotation = Quaternion.Euler(Projectile.transform.position - Turrets[CurrentTurretId - 1].transform.position);
+
+		AngleRot = Mathf.Ceil(Projectile.transform.eulerAngles.z);
 
 		yield return null;
 
 		while (!Input.GetButtonDown("Fire"))
 		{
 			AngleRot -= Input.GetAxis("Horizontal");
-
-			if (AngleRot < 0)
-				AngleRot = 359;
-			else if (AngleRot > 359)
-				AngleRot = 0;
 
 			Projectile.transform.rotation = Quaternion.Euler(0, 0, AngleRot);
 
