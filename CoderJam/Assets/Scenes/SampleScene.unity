@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AngleSpeed: 1
-  prefab: {fileID: 754829624228923242, guid: 2ed3529da5a1adf4b9bba584c9e39afb, type: 3}
+  prefab: {fileID: 3359062229646544660, guid: 2ed3529da5a1adf4b9bba584c9e39afb, type: 3}
   spawn: {fileID: 318435667}
   projectilSpeed: 10
   highlight: {fileID: 1850513754}
@@ -750,7 +750,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AngleSpeed: 1
-  prefab: {fileID: 754829624228923242, guid: 2ed3529da5a1adf4b9bba584c9e39afb, type: 3}
+  prefab: {fileID: 3359062229646544660, guid: 2ed3529da5a1adf4b9bba584c9e39afb, type: 3}
   spawn: {fileID: 129851796}
   projectilSpeed: 10
   highlight: {fileID: 457812685}
@@ -1079,7 +1079,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AngleSpeed: 1
-  prefab: {fileID: 754829624228923242, guid: 2ed3529da5a1adf4b9bba584c9e39afb, type: 3}
+  prefab: {fileID: 3359062229646544660, guid: 2ed3529da5a1adf4b9bba584c9e39afb, type: 3}
   spawn: {fileID: 1657238448}
   projectilSpeed: 10
   highlight: {fileID: 400304447}
@@ -1722,7 +1722,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AngleSpeed: 1
-  prefab: {fileID: 754829624228923242, guid: 2ed3529da5a1adf4b9bba584c9e39afb, type: 3}
+  prefab: {fileID: 3359062229646544660, guid: 2ed3529da5a1adf4b9bba584c9e39afb, type: 3}
   spawn: {fileID: 1900191470}
   projectilSpeed: 10
   highlight: {fileID: 1299649775}

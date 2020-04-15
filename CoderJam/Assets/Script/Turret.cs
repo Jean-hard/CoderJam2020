@@ -19,7 +19,7 @@ public class Turret : MonoBehaviour
 		{
 			AdjustTurretAngle();
 
-			if (Input.GetKeyDown(KeyCode.Space))
+			if (Input.GetButtonDown("Fire"))
 			{
 				Fire();
 			}
@@ -30,7 +30,14 @@ public class Turret : MonoBehaviour
 	{
 		GameObject g = Instantiate(prefab, spawn.position, transform.rotation);
 		g.GetComponent<Rigidbody2D>().velocity = (g.transform.position - transform.parent.position).normalized * projectilSpeed;
-		Control.instance.Projectile = g;
+		Control.instance.Projectile = g.GetComponent<Projectil>();
+		StartCoroutine(SwtichMode());
+	}
+
+	private IEnumerator SwtichMode()
+	{
+		yield return new WaitForEndOfFrame();
+		Control.instance.ControlMode = ControlType.Projectile;
 	}
 
 	private void AdjustTurretAngle()

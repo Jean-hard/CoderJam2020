@@ -15,9 +15,11 @@ public class Control : MonoBehaviour
 	public ControlType ControlMode { get; set; }
 	public Turret[] Turrets { get; set; }
 	public int CurrentTurretId { get; private set; }
-	public GameObject Projectile { get; set; }
+	public Projectil Projectile { get; set; }
 
 	public static Control instance;
+
+	private bool projectilIsTransforming;
 	
 	private void Awake()
 	{
@@ -34,9 +36,12 @@ public class Control : MonoBehaviour
 
 	private void Update()
 	{
-		if (ControlMode == ControlType.Projectile)
+		if (ControlMode == ControlType.Projectile && !projectilIsTransforming)
 		{
-
+			if (Input.GetButtonDown("Fire"))
+			{
+				StartCoroutine(ProjectilTransformation());
+			}
 		}
 		else if (ControlMode == ControlType.Turret)
 		{
@@ -45,6 +50,34 @@ public class Control : MonoBehaviour
 				NextTurret();
 			}
 		}
+	}
+
+	private float AngleRot;
+	private IEnumerator ProjectilTransformation()
+	{
+		projectilIsTransforming = true;
+		Projectile.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+		Projectile.Sacrifice();
+		Projectile.transform.rotation = Quaternion.Euler(Projectile.transform.position - Turrets[CurrentTurretId - 1].transform.position);
+
+		yield return null;
+
+		while (!Input.GetButtonDown("Fire"))
+		{
+			AngleRot -= Input.GetAxis("Horizontal");
+
+			if (AngleRot < 0)
+				AngleRot = 359;
+			else if (AngleRot > 359)
+				AngleRot = 0;
+
+			Projectile.transform.rotation = Quaternion.Euler(0, 0, AngleRot);
+
+			yield return null;
+		}
+
+		ControlMode = ControlType.Turret;
+		projectilIsTransforming = false;
 	}
 
 	private void NextTurret()
