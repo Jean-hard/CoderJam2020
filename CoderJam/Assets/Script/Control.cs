@@ -15,7 +15,7 @@ public class Control : MonoBehaviour
 	public ControlType ControlMode { get; set; }
 	public Turret[] Turrets { get; set; }
 	public int CurrentTurretId { get; private set; }
-	public Projectil Projectile { get; set; }
+	public Projectil projectile { get; set; }
 
 	public static Control instance;
 
@@ -28,8 +28,8 @@ public class Control : MonoBehaviour
 		Turrets = FindObjectsOfType<Turret>();
 		IndexAllTurrets();
 
-		CurrentTurretId = 1;
-		Turrets[CurrentTurretId - 1].setHighLight(true);
+		CurrentTurretId = 0;
+		Turrets[CurrentTurretId].SetHighLight(true);
 
 		ControlMode = ControlType.Turret;
 	}
@@ -50,16 +50,28 @@ public class Control : MonoBehaviour
 				NextTurret();
 			}
 		}
+
+		if (projectile != null)
+		{
+			if (projectile.EnterKillZone())
+			{
+				StopCoroutine(ProjectilTransformation());
+				Destroy(projectile.gameObject);
+				ControlMode = ControlType.Turret;
+				projectilIsTransforming = false;
+				NextTurret();
+			}
+		}
 	}
 
 	private float AngleRot;
 	private IEnumerator ProjectilTransformation()
 	{
 		projectilIsTransforming = true;
-		Projectile.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-		Projectile.Sacrifice();
+		projectile.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+		projectile.Sacrifice();
 
-		AngleRot = Mathf.Ceil(Projectile.transform.eulerAngles.z);
+		AngleRot = Mathf.Ceil(projectile.transform.eulerAngles.z);
 
 		yield return null;
 
@@ -67,24 +79,27 @@ public class Control : MonoBehaviour
 		{
 			AngleRot -= Input.GetAxis("Horizontal");
 
-			Projectile.transform.rotation = Quaternion.Euler(0, 0, AngleRot);
+			projectile.transform.rotation = Quaternion.Euler(0, 0, AngleRot);
 
 			yield return null;
 		}
 
+		GameManager.Instance.HasShot(projectile);
+
 		ControlMode = ControlType.Turret;
 		projectilIsTransforming = false;
+		NextTurret();
 	}
 
 	private void NextTurret()
 	{
-		Turrets[CurrentTurretId - 1].setHighLight(false);
+		Turrets[CurrentTurretId].SetHighLight(false);
 
 		CurrentTurretId++;
-		if (CurrentTurretId > Turrets.Length)
-			CurrentTurretId = 1;
+		if (CurrentTurretId >= Turrets.Length)
+			CurrentTurretId = 0;
 
-		Turrets[CurrentTurretId - 1].setHighLight(true);
+		Turrets[CurrentTurretId].SetHighLight(true);
 
 	}
 
@@ -92,7 +107,7 @@ public class Control : MonoBehaviour
 	{
 		for (int i = 0; i < Turrets.Length; i++)
 		{
-			Turrets[i].ID = i + 1;
+			Turrets[i].ID = i;
 		}
 	}
 }

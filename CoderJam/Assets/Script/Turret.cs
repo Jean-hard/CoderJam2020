@@ -28,13 +28,13 @@ public class Turret : MonoBehaviour
 
 	private void Fire()
 	{
-		GameObject g = Instantiate(prefab, spawn.position, transform.rotation);
+		GameObject g = Instantiate(prefab, spawn.position, transform.rotation, GameManager.Instance.bulletParent.transform);
 		g.GetComponent<Rigidbody2D>().velocity = (g.transform.position - transform.parent.position).normalized * projectilSpeed;
-		Control.instance.Projectile = g.GetComponent<Projectil>();
-		StartCoroutine(SwtichMode());
+		Control.instance.projectile = g.GetComponent<Projectil>();
+		StartCoroutine(SwitchMode());
 	}
 
-	private IEnumerator SwtichMode()
+	private IEnumerator SwitchMode()
 	{
 		yield return new WaitForEndOfFrame();
 		Control.instance.ControlMode = ControlType.Projectile;
@@ -52,7 +52,7 @@ public class Turret : MonoBehaviour
 		transform.rotation = Quaternion.Euler(0, 0, AngleRot);
 	}
 
-	public void setHighLight(bool b)
+	public void SetHighLight(bool b)
 	{
 		if (b)
 			highlight.SetActive(true);
