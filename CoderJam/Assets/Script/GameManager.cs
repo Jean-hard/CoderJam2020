@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public GameObject killZone;
     public GameObject endRoundPanel;
     public GameObject nextButton;
+    public GameObject gameCanvas;
+    public GameObject tutoCanvas;
+    public GameObject turrets;
 
     public Text instantScoreText;
     public Text scoreText;
@@ -25,7 +28,6 @@ public class GameManager : MonoBehaviour
 
     private int score = 0;
     private int instantScore = 0;
-    private int shotNb = 0;
     private int totalScore = 0;
     private int currentTemplateIndex = 0;
 
@@ -53,11 +55,21 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         UpdatePieceList();
+        tutoCanvas.SetActive(true);
+        gameCanvas.SetActive(false);
+        turrets.SetActive(false);
     }
 
     private void Update()
     {
         CheckEndRound();
+    }
+
+    public void LaunchGame()
+    {
+        tutoCanvas.SetActive(false);
+        gameCanvas.SetActive(true);
+        turrets.SetActive(true);
     }
 
     private void UpdatePieceList()
@@ -160,7 +172,6 @@ public class GameManager : MonoBehaviour
 
         //Ajoute le score instant au score global
         score += instantScore;
-        shotNb++;
         
         scoreText.text = score.ToString();
 
