@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Template
+    uniqueID: 2758103723
+    locked: 0
+  - name: Projectil
+    uniqueID: 178174063
+    locked: 0

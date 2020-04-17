@@ -56,7 +56,10 @@ public class Control : MonoBehaviour
 			if (projectile.EnterKillZone())
 			{
 				StopCoroutine(ProjectilTransformation());
+				GameManager.Instance.GetMalus(new Vector3(1050f, 177f, 0));
 				Destroy(projectile.gameObject);
+				GameManager.Instance.nbShot--;
+				GameManager.Instance.nbShotText.text = GameManager.Instance.nbShot.ToString();
 				ControlMode = ControlType.Turret;
 				projectilIsTransforming = false;
 				NextTurret();
